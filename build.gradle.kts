@@ -1,6 +1,7 @@
 val ktorVersion = "2.2.3"
 val kotlinVersion = "1.8.10"
 val logbackVersion = "1.2.11"
+val hopliteVersion = "2.7.1"
 
 plugins {
 	kotlin("jvm") version "1.8.10"
@@ -9,9 +10,10 @@ plugins {
 
 group = "no.alexgaard"
 version = "0.0.1"
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 application {
-	mainClass.set("no.alexgaard.ApplicationKt")
+	mainClass.set("no.alexgaard.MainKt")
 
 	val isDevelopment: Boolean = project.ext.has("development")
 	applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -25,6 +27,15 @@ dependencies {
 	implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
+	implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
+	implementation("com.sksamuel.hoplite:hoplite-yaml:$hopliteVersion")
 	testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+	kotlinOptions {
+		freeCompilerArgs = listOf("-Xjsr305=strict")
+		jvmTarget = "17"
+	}
 }
