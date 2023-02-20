@@ -1,4 +1,4 @@
-package no.alexgaard.backend_template.config
+package no.alexgaard.ktor_template.config
 
 data class ApplicationConfig(
 	val server: Server,

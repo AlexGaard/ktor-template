@@ -15,7 +15,7 @@ version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 application {
-	mainClass.set("no.alexgaard.backend_template.MainKt")
+	mainClass.set("no.alexgaard.ktor_template.MainKt")
 
 	val isDevelopment: Boolean = project.ext.has("development")
 	applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -34,7 +34,6 @@ dependencies {
 	implementation("io.insert-koin:koin-core:$koinVersion")
 
 	testImplementation("io.insert-koin:koin-test:$koinVersion")
-	testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
 	testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 }
 

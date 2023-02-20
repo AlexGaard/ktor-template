@@ -1,10 +1,10 @@
-package no.alexgaard.backend_template.application
+package no.alexgaard.ktor_template.application
 
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.routing.*
-import no.alexgaard.backend_template.config.ApplicationConfig
-import no.alexgaard.backend_template.routes.registerGreeterRoutes
+import no.alexgaard.ktor_template.config.ApplicationConfig
+import no.alexgaard.ktor_template.routes.registerGreeterRoutes
 import org.koin.dsl.koinApplication
 
 

@@ -1,8 +1,8 @@
-package no.alexgaard.backend_template.application
+package no.alexgaard.ktor_template.application
 
-import no.alexgaard.backend_template.config.ApplicationConfig
-import no.alexgaard.backend_template.repository.GreeterRepository
-import no.alexgaard.backend_template.service.GreeterService
+import no.alexgaard.ktor_template.config.ApplicationConfig
+import no.alexgaard.ktor_template.repository.GreeterRepository
+import no.alexgaard.ktor_template.service.GreeterService
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 

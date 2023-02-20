@@ -1,9 +1,9 @@
-package no.alexgaard.backend_template.routes
+package no.alexgaard.ktor_template.routes
 
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import no.alexgaard.backend_template.service.GreeterService
+import no.alexgaard.ktor_template.service.GreeterService
 
 fun registerGreeterRoutes(
 	routing: Routing,

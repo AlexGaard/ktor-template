@@ -1,6 +1,6 @@
-package no.alexgaard.backend_template.service
+package no.alexgaard.ktor_template.service
 
-import no.alexgaard.backend_template.repository.GreeterRepository
+import no.alexgaard.ktor_template.repository.GreeterRepository
 
 class GreeterService(
 	private val greeterRepository: GreeterRepository

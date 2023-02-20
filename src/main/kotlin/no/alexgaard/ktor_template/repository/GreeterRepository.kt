@@ -1,4 +1,4 @@
-package no.alexgaard.backend_template.repository
+package no.alexgaard.ktor_template.repository
 
 class GreeterRepository() {
 

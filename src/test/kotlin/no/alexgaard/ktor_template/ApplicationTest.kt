@@ -1,7 +1,7 @@
-package no.alexgaard.backend_template
+package no.alexgaard.ktor_template
 
-import no.alexgaard.backend_template.application.startApplication
-import no.alexgaard.backend_template.config.ApplicationConfig
+import no.alexgaard.ktor_template.application.startApplication
+import no.alexgaard.ktor_template.config.ApplicationConfig
 import org.junit.jupiter.api.Test
 
 
