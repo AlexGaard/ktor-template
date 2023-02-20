@@ -1,9 +1,9 @@
-package no.alexgaard
+package no.alexgaard.backend_template
 
 import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.addResourceSource
-import no.alexgaard.application.startApplication
-import no.alexgaard.config.ApplicationConfig
+import no.alexgaard.backend_template.application.startApplication
+import no.alexgaard.backend_template.config.ApplicationConfig
 
 fun main () {
 	val config = ConfigLoaderBuilder.default()
