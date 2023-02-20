@@ -4,6 +4,10 @@ val logbackVersion = "1.2.11"
 val hopliteVersion = "2.7.1"
 val koinVersion = "3.3.3"
 val junitVersion = "5.8.1"
+val jdbiVersion = "3.37.1"
+val flywayVersion = "9.15.0"
+val hikariVersion = "5.0.1"
+val postgresVersion = "42.5.4"
 
 plugins {
 	kotlin("jvm") version "1.8.10"
@@ -29,9 +33,17 @@ dependencies {
 	implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
 	implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
 	implementation("com.sksamuel.hoplite:hoplite-yaml:$hopliteVersion")
 	implementation("io.insert-koin:koin-core:$koinVersion")
+
+	implementation("org.jdbi:jdbi3-core:$jdbiVersion")
+	implementation("org.jdbi:jdbi3-kotlin:$jdbiVersion")
+	implementation("org.flywaydb:flyway-core:$flywayVersion")
+	implementation("com.zaxxer:HikariCP:$hikariVersion")
+
+	runtimeOnly("org.postgresql:postgresql:$postgresVersion")
 
 	testImplementation("io.insert-koin:koin-test:$koinVersion")
 	testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
