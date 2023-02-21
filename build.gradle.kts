@@ -34,8 +34,9 @@ repositories {
 dependencies {
 	implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
-	implementation("ch.qos.logback:logback-classic:$logbackVersion")
+	implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
 
+	implementation("ch.qos.logback:logback-classic:$logbackVersion")
 	implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
 	implementation("com.sksamuel.hoplite:hoplite-yaml:$hopliteVersion")
 	implementation("io.insert-koin:koin-core:$koinVersion")
@@ -44,6 +45,8 @@ dependencies {
 	implementation("org.jdbi:jdbi3-kotlin:$jdbiVersion")
 	implementation("org.flywaydb:flyway-core:$flywayVersion")
 	implementation("com.zaxxer:HikariCP:$hikariVersion")
+	implementation("io.ktor:ktor-server-call-logging-jvm:2.2.3")
+	implementation("io.ktor:ktor-server-call-id-jvm:2.2.3")
 
 	runtimeOnly("org.postgresql:postgresql:$postgresVersion")
 
