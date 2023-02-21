@@ -10,9 +10,9 @@ import no.alexgaard.ktor_template.service.UserService
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-object ApplicationModules {
+object ApplicationModule {
 
-	fun createModules(config: ApplicationConfig): org.koin.core.module.Module {
+	fun createModule(config: ApplicationConfig): org.koin.core.module.Module {
 		return module {
 			single { config }
 			single { createDataSource(config.database) }

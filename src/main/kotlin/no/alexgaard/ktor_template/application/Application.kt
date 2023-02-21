@@ -11,7 +11,7 @@ import org.koin.dsl.koinApplication
 
 fun startApplication(config: ApplicationConfig) {
 	val koin = koinApplication {
-		modules(ApplicationModules.createModules(config))
+		modules(ApplicationModule.createModule(config))
 	}.koin
 
 	Database.migrateDb(koin.get())

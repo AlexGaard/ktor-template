@@ -8,6 +8,8 @@ val jdbiVersion = "3.37.1"
 val flywayVersion = "9.15.0"
 val hikariVersion = "5.0.1"
 val postgresVersion = "42.5.4"
+val testcontainersVersion = "1.17.6"
+val kotestVersion = "5.5.5"
 
 plugins {
 	kotlin("jvm") version "1.8.10"
@@ -47,6 +49,9 @@ dependencies {
 
 	testImplementation("io.insert-koin:koin-test:$koinVersion")
 	testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+	testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
+	testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
+	testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
 }
 
 tasks.withType<Test> {

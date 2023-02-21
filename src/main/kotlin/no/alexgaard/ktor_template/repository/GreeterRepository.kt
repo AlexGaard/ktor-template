@@ -1,6 +1,6 @@
 package no.alexgaard.ktor_template.repository
 
-class GreeterRepository() {
+class GreeterRepository {
 
 	fun getStoredGreeting(): String {
 		return "Hello from repository"
