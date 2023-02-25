@@ -2,12 +2,19 @@ package no.alexgaard.ktor_template.repository
 
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import no.alexgaard.ktor_template.test_utils.TestApplication
+import no.alexgaard.ktor_template.test_utils.IntegrationTest
+import no.alexgaard.ktor_template.test_utils.database.DatabaseUtils
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class UserRepositoryTest : TestApplication() {
+class UserRepositoryTest : IntegrationTest() {
 
-	private val userRepository = koin.get<UserRepository>()
+	private val userRepository = dependencies.get<UserRepository>()
+
+	@BeforeEach
+	fun cleanDatabase() {
+		DatabaseUtils.cleanSchema(dependencies.get())
+	}
 
 	@Test
 	fun `getAllUsers - should get all users`() {

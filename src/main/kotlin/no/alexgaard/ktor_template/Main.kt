@@ -2,6 +2,7 @@ package no.alexgaard.ktor_template
 
 import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.addResourceSource
+import no.alexgaard.ktor_template.application.createApplication
 import no.alexgaard.ktor_template.application.startApplication
 import no.alexgaard.ktor_template.config.ApplicationConfig
 
@@ -11,5 +12,10 @@ fun main () {
 		.build()
 		.loadConfigOrThrow<ApplicationConfig>()
 
-	startApplication(config)
+	val app = createApplication(config)
+
+	app.server.start(true)
+
+//	startApplication(config)
+
 }

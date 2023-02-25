@@ -10,6 +10,7 @@ val hikariVersion = "5.0.1"
 val postgresVersion = "42.5.4"
 val testcontainersVersion = "1.17.6"
 val kotestVersion = "5.5.5"
+val okHttpVersion = "4.10.0"
 
 plugins {
 	id("io.ktor.plugin") version "2.2.3"
@@ -44,6 +45,7 @@ dependencies {
 	implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
 	implementation("com.sksamuel.hoplite:hoplite-yaml:$hopliteVersion")
 	implementation("io.insert-koin:koin-core:$koinVersion")
+	implementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
 
 	implementation("org.jdbi:jdbi3-core:$jdbiVersion")
 	implementation("org.jdbi:jdbi3-kotlin:$jdbiVersion")
