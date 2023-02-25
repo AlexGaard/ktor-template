@@ -30,7 +30,7 @@ object Database {
 		val hikariConfig = HikariConfig()
 		hikariConfig.jdbcUrl = config.jdbcUrl
 		hikariConfig.username = config.username
-		hikariConfig.password = config.password
+		hikariConfig.password = config.password.value
 		hikariConfig.minimumIdle = config.minimumIdle
 		hikariConfig.maximumPoolSize = config.maximumPoolSize
 		return HikariDataSource(hikariConfig)

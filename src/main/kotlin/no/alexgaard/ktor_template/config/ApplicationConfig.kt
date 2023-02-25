@@ -1,5 +1,7 @@
 package no.alexgaard.ktor_template.config
 
+import no.alexgaard.ktor_template.util.Secret
+
 data class ApplicationConfig(
 	val server: Server,
 	val database: Database
@@ -12,8 +14,9 @@ data class ApplicationConfig(
 	data class Database(
 		val jdbcUrl: String,
 		val username: String,
-		val password: String,
+		val password: Secret,
 		val minimumIdle: Int = 1,
 		val maximumPoolSize: Int = 10,
 	)
+
 }
