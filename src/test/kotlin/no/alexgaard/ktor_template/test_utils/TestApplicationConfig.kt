@@ -11,7 +11,6 @@ object TestApplicationConfig {
 
 		return ApplicationConfig(
 			ApplicationConfig.Server(
-				wait = false,
 				port = findFreePort()
 			),
 			ApplicationConfig.Database(

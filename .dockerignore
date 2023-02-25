@@ -1,0 +1,7 @@
+.gradle
+.idea
+.requests
+gradle
+src
+build
+!build/libs
