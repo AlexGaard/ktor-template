@@ -5,13 +5,10 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import no.alexgaard.ktor_template.service.GreeterService
 
-fun registerGreeterRoutes(
-	routing: Routing,
-	greeterService: GreeterService,
-) {
-	routing {
-		get("/api/v1/greeting") {
-			call.respondText(greeterService.getGreeting())
+fun Route.registerGreeterRoutes(greeterService: GreeterService) =
+	route("/api/v1") {
+		get("/greeting") {
+			val name = call.parameters["name"] ?: throw IllegalArgumentException("name is missing")
+			call.respondText(greeterService.getGreeting(name))
 		}
 	}
-}

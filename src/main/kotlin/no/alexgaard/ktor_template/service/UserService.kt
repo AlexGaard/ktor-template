@@ -11,4 +11,8 @@ class UserService(
 		return userRepository.getAllUsers()
 	}
 
+	fun createUser(name: String) {
+		userRepository.createUser(name)
+	}
+
 }

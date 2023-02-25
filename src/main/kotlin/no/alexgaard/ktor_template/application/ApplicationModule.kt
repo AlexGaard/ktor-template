@@ -3,7 +3,6 @@ package no.alexgaard.ktor_template.application
 import no.alexgaard.ktor_template.application.Database.createDataSource
 import no.alexgaard.ktor_template.application.Database.createJdbi
 import no.alexgaard.ktor_template.config.ApplicationConfig
-import no.alexgaard.ktor_template.repository.GreeterRepository
 import no.alexgaard.ktor_template.repository.UserRepository
 import no.alexgaard.ktor_template.service.GreeterService
 import no.alexgaard.ktor_template.service.UserService
@@ -19,7 +18,6 @@ object ApplicationModule {
 			singleOf(::createJdbi)
 			singleOf(::UserService)
 			singleOf(::GreeterService)
-			singleOf(::GreeterRepository)
 			singleOf(::UserRepository)
 		}
 	}

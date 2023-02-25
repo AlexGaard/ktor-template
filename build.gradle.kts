@@ -12,8 +12,9 @@ val testcontainersVersion = "1.17.6"
 val kotestVersion = "5.5.5"
 
 plugins {
-	kotlin("jvm") version "1.8.10"
 	id("io.ktor.plugin") version "2.2.3"
+	kotlin("jvm") version "1.8.10"
+	kotlin("plugin.serialization") version "1.8.10"
 }
 
 group = "no.alexgaard"
@@ -36,6 +37,8 @@ dependencies {
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
 	implementation("io.ktor:ktor-server-compression:$ktorVersion")
+	implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
+	implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
 	implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
@@ -46,8 +49,6 @@ dependencies {
 	implementation("org.jdbi:jdbi3-kotlin:$jdbiVersion")
 	implementation("org.flywaydb:flyway-core:$flywayVersion")
 	implementation("com.zaxxer:HikariCP:$hikariVersion")
-	implementation("io.ktor:ktor-server-call-logging-jvm:2.2.3")
-	implementation("io.ktor:ktor-server-call-id-jvm:2.2.3")
 
 	runtimeOnly("org.postgresql:postgresql:$postgresVersion")
 

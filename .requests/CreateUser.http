@@ -1,0 +1,4 @@
+POST http://localhost:8081/api/v1/user
+Content-Type: application/json
+
+{ "name": "Test" }
