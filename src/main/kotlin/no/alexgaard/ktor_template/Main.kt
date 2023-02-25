@@ -6,7 +6,9 @@ import no.alexgaard.ktor_template.application.createApplication
 import no.alexgaard.ktor_template.config.ApplicationConfig
 import org.slf4j.LoggerFactory
 
-fun main () {
+fun main() = startApplication()
+
+fun startApplication() {
 	val config = ConfigLoaderBuilder.default()
 		.addResourceSource("/application-config.yml")
 		.build()

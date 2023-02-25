@@ -12,6 +12,7 @@ val testcontainersVersion = "1.17.6"
 val kotestVersion = "5.5.5"
 val okHttpVersion = "4.10.0"
 val prometheusVersion = "1.10.4"
+val dotenvVersion = "6.3.1"
 
 plugins {
 	id("io.ktor.plugin") version "2.2.3"
@@ -62,6 +63,7 @@ dependencies {
 
 	runtimeOnly("org.postgresql:postgresql:$postgresVersion")
 
+	testImplementation("io.github.cdimascio:dotenv-kotlin:$dotenvVersion")
 	testImplementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
 	testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 	testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
