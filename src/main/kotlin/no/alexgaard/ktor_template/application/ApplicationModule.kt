@@ -1,5 +1,7 @@
 package no.alexgaard.ktor_template.application
 
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.alexgaard.ktor_template.application.Database.createDataSource
 import no.alexgaard.ktor_template.application.Database.createJdbi
 import no.alexgaard.ktor_template.config.ApplicationConfig
@@ -15,6 +17,7 @@ object ApplicationModule {
 		return module {
 			single { config }
 			single { createDataSource(config.database) }
+			single { PrometheusMeterRegistry(PrometheusConfig.DEFAULT) }
 			singleOf(::createJdbi)
 			singleOf(::UserService)
 			singleOf(::GreeterService)

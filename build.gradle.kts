@@ -11,6 +11,7 @@ val postgresVersion = "42.5.4"
 val testcontainersVersion = "1.17.6"
 val kotestVersion = "5.5.5"
 val okHttpVersion = "4.10.0"
+val prometheusVersion = "1.10.4"
 
 plugins {
 	id("io.ktor.plugin") version "2.2.3"
@@ -40,12 +41,13 @@ dependencies {
 	implementation("io.ktor:ktor-server-compression:$ktorVersion")
 	implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
 	implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+	implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
 
+	implementation("io.micrometer:micrometer-registry-prometheus:$prometheusVersion")
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
 	implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
 	implementation("com.sksamuel.hoplite:hoplite-yaml:$hopliteVersion")
 	implementation("io.insert-koin:koin-core:$koinVersion")
-	implementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
 
 	implementation("org.jdbi:jdbi3-core:$jdbiVersion")
 	implementation("org.jdbi:jdbi3-kotlin:$jdbiVersion")
@@ -54,7 +56,7 @@ dependencies {
 
 	runtimeOnly("org.postgresql:postgresql:$postgresVersion")
 
-	testImplementation("io.insert-koin:koin-test:$koinVersion")
+	testImplementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
 	testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 	testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
 	testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
