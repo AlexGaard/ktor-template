@@ -35,6 +35,7 @@ dependencies {
 	implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-call-logging:$ktorVersion")
+	implementation("io.ktor:ktor-server-compression:$ktorVersion")
 
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
 	implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
