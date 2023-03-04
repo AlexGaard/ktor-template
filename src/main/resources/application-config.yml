@@ -7,3 +7,5 @@ database:
   password: ${DATABASE_PASSWORD}
   jdbcUrl: ${DATABASE_JDBC_URL}
 
+dummyJsonClient:
+  baseUrl: ${DUMMY_JSON_BASE_URL}

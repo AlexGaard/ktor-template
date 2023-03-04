@@ -11,6 +11,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.routing.*
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.alexgaard.ktor_template.config.ApplicationConfig
+import no.alexgaard.ktor_template.routes.DownstreamApiRoutes.registerDownstreamApiRoutes
 import no.alexgaard.ktor_template.routes.registerGreeterRoutes
 import no.alexgaard.ktor_template.routes.registerMetricRoutes
 import no.alexgaard.ktor_template.routes.registerUserRoutes
@@ -38,6 +39,7 @@ fun createApplication(config: ApplicationConfig): Application {
 			registerMetricRoutes(koin.get())
 			registerGreeterRoutes(koin.get())
 			registerUserRoutes(koin.get())
+			registerDownstreamApiRoutes(koin.get())
 		}
 	}
 

@@ -55,6 +55,7 @@ dependencies {
 	implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
 	implementation("com.sksamuel.hoplite:hoplite-yaml:$hopliteVersion")
 	implementation("io.insert-koin:koin-core:$koinVersion")
+	implementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
 
 	implementation("org.jdbi:jdbi3-core:$jdbiVersion")
 	implementation("org.jdbi:jdbi3-kotlin:$jdbiVersion")
@@ -64,7 +65,6 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql:$postgresVersion")
 
 	testImplementation("io.github.cdimascio:dotenv-kotlin:$dotenvVersion")
-	testImplementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
 	testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 	testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
 	testImplementation("org.testcontainers:postgresql:$testcontainersVersion")

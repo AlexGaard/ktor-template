@@ -1,1 +1,1 @@
-GET http://localhost:8081/internal/metrics
+GET http://localhost:8080/internal/metrics

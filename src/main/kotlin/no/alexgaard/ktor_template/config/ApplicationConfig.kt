@@ -4,7 +4,8 @@ import no.alexgaard.ktor_template.util.Secret
 
 data class ApplicationConfig(
 	val server: Server,
-	val database: Database
+	val database: Database,
+	val dummyJsonClient: DummyJsonClient
 ) {
 	data class Server(
 		val port: Int = 8080,
@@ -17,6 +18,10 @@ data class ApplicationConfig(
 		val password: Secret,
 		val minimumIdle: Int = 1,
 		val maximumPoolSize: Int = 10,
+	)
+
+	data class DummyJsonClient(
+		val baseUrl: String
 	)
 
 }
