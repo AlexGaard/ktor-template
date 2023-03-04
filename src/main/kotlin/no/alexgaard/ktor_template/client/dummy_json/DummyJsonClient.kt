@@ -1,8 +1,10 @@
 package no.alexgaard.ktor_template.client.dummy_json
 
+import no.alexgaard.ktor_template.util.rest.ApiResult
+
 interface DummyJsonClient {
 
-	fun getAllUsers(): List<User>
+	fun getAllUsers(): ApiResult<List<User>>
 
 }
 

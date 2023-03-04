@@ -13,7 +13,8 @@ class GreetingControllerTest : IntegrationTest() {
 			path = "/api/v1/greeting?name=Test",
 		)
 
-		res.body?.string() shouldBe "Hello Test"
+		res.statusCode shouldBe 200
+		res.body shouldBe "Hello Test"
 	}
 
 }

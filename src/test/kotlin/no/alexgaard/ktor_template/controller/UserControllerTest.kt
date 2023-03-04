@@ -27,7 +27,7 @@ class UserControllerTest : IntegrationTest() {
 			""".trimIndent()
 		)
 
-		res.code shouldBe 200
+		res.statusCode shouldBe 200
 
 		val allUsers = userRepository.getAllUsers()
 
@@ -50,8 +50,8 @@ class UserControllerTest : IntegrationTest() {
 			[{"id":1,"name":"Test1"},{"id":2,"name":"Test2"}]
 		""".trimIndent()
 
-		res.code shouldBe 200
-		res.body?.string() shouldBe expectedJson
+		res.statusCode shouldBe 200
+		res.body shouldBe expectedJson
 	}
 
 }

@@ -1,11 +1,8 @@
 package no.alexgaard.ktor_template.client.dummy_json
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import no.alexgaard.ktor_template.util.rest.JsonUtils.jsonMapper
-import no.alexgaard.ktor_template.util.rest.baseClient
+import no.alexgaard.ktor_template.util.rest.*
 import okhttp3.OkHttpClient
-import okhttp3.Request
 
 class DummyJsonClientImpl(
 	private val baseUrl: String,
@@ -13,19 +10,15 @@ class DummyJsonClientImpl(
 	private val client: OkHttpClient = baseClient()
 ) : DummyJsonClient {
 
-	override fun getAllUsers(): List<User> {
-		val request = Request.Builder()
-			.url("$baseUrl/users")
-			.addHeader("Authorization", "Bearer ${bearerTokenProvider.invoke()}")
-			.get()
-			.build()
+	override fun getAllUsers(): ApiResult<List<User>> {
+		val req = request(
+			method = "GET",
+			url = "$baseUrl/users",
+			headers = mapOf(bearerAuthorzation(bearerTokenProvider))
+		)
 
-		val resp = client.newCall(request).execute()
-		return resp.body?.string()?.let { body ->
-			jsonMapper.decodeFromString<GetAllUsers.Response>(body)
-				.users
-				.map { User(it.id, it.firstName, it.lastName) }
-		} ?: throw IllegalArgumentException("")
+		return client.sendRequest<GetAllUsers.Response>(req)
+			.map { data -> data.users.map { User(it.id, it.firstName, it.lastName) } }
 	}
 
 	object GetAllUsers {

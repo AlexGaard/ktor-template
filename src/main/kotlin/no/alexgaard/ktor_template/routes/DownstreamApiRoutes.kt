@@ -12,6 +12,7 @@ object DownstreamApiRoutes {
 		route("/api/v1/downstream") {
 			get("/users") {
 				val users = dummyJsonClient.getAllUsers()
+					.getOrThrow()
 					.map { UserDto(it.id, it.firstName, it.lastName) }
 
 				call.respond(users)
