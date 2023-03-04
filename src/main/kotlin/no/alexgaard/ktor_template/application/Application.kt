@@ -9,7 +9,6 @@ import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.routing.*
-import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.alexgaard.ktor_template.config.ApplicationConfig
 import no.alexgaard.ktor_template.routes.registerGreeterRoutes
@@ -46,6 +45,6 @@ fun createApplication(config: ApplicationConfig): Application {
 }
 
 data class Application(
-	val server: NettyApplicationEngine,
+	val server: BaseApplicationEngine,
 	val dependencies: Koin
 )

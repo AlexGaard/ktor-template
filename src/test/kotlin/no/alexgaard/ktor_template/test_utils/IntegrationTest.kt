@@ -1,32 +1,27 @@
 package no.alexgaard.ktor_template.test_utils
 
-import no.alexgaard.ktor_template.application.Application
 import no.alexgaard.ktor_template.application.createApplication
-import no.alexgaard.ktor_template.config.ApplicationConfig
-import no.alexgaard.ktor_template.test_utils.database.DatabaseUtils
 import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.junit.jupiter.api.BeforeEach
-import org.koin.core.Koin
 
 open class IntegrationTest {
 
-	private val application: Application
+	companion object {
+		private val config = TestApplicationConfig.createTestConfig()
 
-	private val config = TestApplicationConfig.createTestConfig()
+		private val serverUrl = "http://${config.server.host}:${config.server.port}"
 
-	private val serverUrl = getServerUrl(config)
+		private val client = OkHttpClient()
 
-	private val client = OkHttpClient()
+		private val application = createApplication(config)
 
-	val dependencies: Koin
+		val dependencies = application.dependencies
 
-	init {
-		application = createApplication(config)
-		application.server.start(wait = false)
-		dependencies = application.dependencies
+		init {
+			application.server.start(wait = false)
+		}
 	}
 
 	fun sendRequest(
@@ -43,10 +38,6 @@ open class IntegrationTest {
 			.build()
 
 		return client.newCall(request).execute()
-	}
-
-	private fun getServerUrl(config: ApplicationConfig): String {
-		return "http://${config.server.host}:${config.server.port}"
 	}
 
 }
