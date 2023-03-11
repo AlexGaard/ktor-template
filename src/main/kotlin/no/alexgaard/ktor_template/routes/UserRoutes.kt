@@ -7,15 +7,27 @@ import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 import no.alexgaard.ktor_template.service.UserService
 
-fun Route.registerUserRoutes(userService: UserService) =
-	route("/api/v1") {
+class UserRoutes(
+	private val userService: UserService
+) {
+
+	fun register(routing: Routing) {
+		routing.route("/api/v1") {
+			getAllUsers()
+			createUser()
+		}
+	}
+
+	private fun Route.getAllUsers() {
 		get("/user") {
 			val users = userService.getAllUsers()
 				.map { UserDto(it.id, it.name) }
 
 			call.respond(users)
 		}
+	}
 
+	private fun Route.createUser() {
 		post("/user") {
 			val request = call.receive<CreateUserRequest>()
 
@@ -26,13 +38,15 @@ fun Route.registerUserRoutes(userService: UserService) =
 		}
 	}
 
-@Serializable
-data class UserDto(
-	val id: Int,
-	val name: String,
-)
+	@Serializable
+	data class UserDto(
+		val id: Int,
+		val name: String,
+	)
 
-@Serializable
-data class CreateUserRequest(
-	val name: String
-)
+	@Serializable
+	data class CreateUserRequest(
+		val name: String
+	)
+
+}

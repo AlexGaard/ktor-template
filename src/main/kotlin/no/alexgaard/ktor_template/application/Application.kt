@@ -13,9 +13,9 @@ import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.alexgaard.ktor_template.application.ApplicationModule.resolveDependencies
 import no.alexgaard.ktor_template.config.ApplicationConfig
 import no.alexgaard.ktor_template.routes.DummyJsonRoutes.registerDummyJsonRoutes
+import no.alexgaard.ktor_template.routes.UserRoutes
 import no.alexgaard.ktor_template.routes.registerGreetingRoutes
 import no.alexgaard.ktor_template.routes.registerMetricRoutes
-import no.alexgaard.ktor_template.routes.registerUserRoutes
 import org.koin.core.Koin
 
 fun createApplication(config: ApplicationConfig): Application {
@@ -37,7 +37,8 @@ fun createApplication(config: ApplicationConfig): Application {
 			registerDummyJsonRoutes(dependencies.get())
 			registerGreetingRoutes(dependencies.get())
 			registerMetricRoutes(dependencies.get())
-			registerUserRoutes(dependencies.get())
+			// Alternate way of registering routes
+			UserRoutes(dependencies.get()).register(this)
 		}
 	}
 
