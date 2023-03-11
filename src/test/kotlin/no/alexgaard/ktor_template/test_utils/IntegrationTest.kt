@@ -1,11 +1,12 @@
 package no.alexgaard.ktor_template.test_utils
 
-import no.alexgaard.ktor_template.application.createApplication
+import no.alexgaard.ktor_template.application.Application
 import no.alexgaard.ktor_template.util.rest.RawResponse
 import no.alexgaard.ktor_template.util.rest.request
 import no.alexgaard.ktor_template.util.rest.sendRaw
-import okhttp3.*
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
 
 open class IntegrationTest {
 
@@ -14,7 +15,7 @@ open class IntegrationTest {
 
 		private val serverUrl = "http://${config.server.host}:${config.server.port}"
 
-		private val application = createApplication(config)
+		private val application = Application.create(config)
 
 		private val client = OkHttpClient()
 

@@ -5,8 +5,14 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.micrometer.prometheus.PrometheusMeterRegistry
 
-fun Route.registerMetricRoutes(meterRegistry: PrometheusMeterRegistry) = route("/internal/metrics") {
-	get {
-		call.respond(meterRegistry.scrape())
+class MetricRoutes(
+	private val meterRegistry: PrometheusMeterRegistry
+) {
+
+	fun register(routing: Routing) {
+		routing.get("/internal/metrics") {
+			call.respond(meterRegistry.scrape())
+		}
 	}
+
 }

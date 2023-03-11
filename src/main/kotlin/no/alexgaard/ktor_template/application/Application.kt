@@ -12,40 +12,43 @@ import io.ktor.server.routing.*
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.alexgaard.ktor_template.application.ApplicationModule.resolveDependencies
 import no.alexgaard.ktor_template.config.ApplicationConfig
-import no.alexgaard.ktor_template.routes.DummyJsonRoutes.registerDummyJsonRoutes
+import no.alexgaard.ktor_template.routes.DummyJsonRoutes
+import no.alexgaard.ktor_template.routes.GreetingRoutes
+import no.alexgaard.ktor_template.routes.MetricRoutes
 import no.alexgaard.ktor_template.routes.UserRoutes
-import no.alexgaard.ktor_template.routes.registerGreetingRoutes
-import no.alexgaard.ktor_template.routes.registerMetricRoutes
 import org.koin.core.Koin
 
-fun createApplication(config: ApplicationConfig): Application {
-	val dependencies = resolveDependencies(config).koin
+object Application {
 
-	Database.migrateDb(dependencies.get())
+	fun create(config: ApplicationConfig): Instance {
+		val dependencies = resolveDependencies(config).koin
 
-	val server = embeddedServer(
-		factory = Netty,
-		port = config.server.port,
-		host = config.server.host,
-	) {
-		install(CallLogging)
-		install(Compression) { gzip() }
-		install(ContentNegotiation) { json() }
-		install(MicrometerMetrics) { registry = dependencies.get<PrometheusMeterRegistry>() }
+		Database.migrateDb(dependencies.get())
 
-		routing {
-			registerDummyJsonRoutes(dependencies.get())
-			registerGreetingRoutes(dependencies.get())
-			registerMetricRoutes(dependencies.get())
-			// Alternate way of registering routes
-			UserRoutes(dependencies.get()).register(this)
+		val server = embeddedServer(
+			factory = Netty,
+			port = config.server.port,
+			host = config.server.host,
+		) {
+			install(CallLogging)
+			install(Compression) { gzip() }
+			install(ContentNegotiation) { json() }
+			install(MicrometerMetrics) { registry = dependencies.get<PrometheusMeterRegistry>() }
+
+			routing {
+				DummyJsonRoutes(dependencies.get()).register(this)
+				GreetingRoutes(dependencies.get()).register(this)
+				MetricRoutes(dependencies.get()).register(this)
+				UserRoutes(dependencies.get()).register(this)
+			}
 		}
+
+		return Instance(server, dependencies)
 	}
 
-	return Application(server, dependencies)
-}
+	data class Instance(
+		val server: BaseApplicationEngine,
+		val dependencies: Koin
+	)
 
-data class Application(
-	val server: BaseApplicationEngine,
-	val dependencies: Koin
-)
+}
