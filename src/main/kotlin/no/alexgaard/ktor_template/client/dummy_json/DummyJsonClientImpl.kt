@@ -6,7 +6,6 @@ import okhttp3.OkHttpClient
 
 class DummyJsonClientImpl(
 	private val baseUrl: String,
-	private val bearerTokenProvider: () -> String,
 	private val client: OkHttpClient = baseClient()
 ) : DummyJsonClient {
 
@@ -14,7 +13,6 @@ class DummyJsonClientImpl(
 		val req = request(
 			method = "GET",
 			url = "$baseUrl/users",
-			headers = mapOf(bearerAuthorzation(bearerTokenProvider))
 		)
 
 		return client.sendRequest<GetAllUsers.Response>(req)

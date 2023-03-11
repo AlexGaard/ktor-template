@@ -1,10 +1,10 @@
-package no.alexgaard.ktor_template.controller
+package no.alexgaard.ktor_template.routes
 
 import io.kotest.matchers.shouldBe
 import no.alexgaard.ktor_template.test_utils.IntegrationTest
 import org.junit.jupiter.api.Test
 
-class GreetingControllerTest : IntegrationTest() {
+class GreetingRoutesTest : IntegrationTest() {
 
 	@Test
 	fun `should return greeting with name`() {

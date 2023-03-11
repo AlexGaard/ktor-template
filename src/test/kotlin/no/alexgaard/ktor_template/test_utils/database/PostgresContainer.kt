@@ -2,7 +2,6 @@ package no.alexgaard.ktor_template.test_utils.database
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import no.alexgaard.ktor_template.test_utils.database.DatabaseUtils.cleanAndApplyMigrations
 import no.alexgaard.ktor_template.test_utils.database.DatabaseUtils.isValid
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
@@ -17,8 +16,6 @@ class PostgresContainer {
 	private val postgresContainer: PostgreSQLContainer<Nothing> = createContainer()
 
 	private var containerDataSource: DataSource? = null
-
-	private var hasAppliedMigrations = false
 
 	fun start() {
 		postgresContainer.start()
@@ -35,10 +32,6 @@ class PostgresContainer {
 
 		if (containerDataSource == null || !isValid(containerDataSource!!)) {
 			containerDataSource = createDataSource(postgresContainer)
-		}
-
-		if (!hasAppliedMigrations) {
-			cleanAndApplyMigrations(containerDataSource!!)
 		}
 
 		return containerDataSource!!

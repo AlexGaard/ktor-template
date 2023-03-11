@@ -16,7 +16,7 @@ class UserRepository(
 	}
 
 	fun getAllUsers(): List<UserDbo> = jdbi.handle {
-		it.createQuery("select * from users")
+		it.createQuery("SELECT * FROM users")
 			.mapTo<UserDbo>()
 			.toList()
 	}

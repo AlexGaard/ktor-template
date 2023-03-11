@@ -1,14 +1,13 @@
-package no.alexgaard.ktor_template.controller
+package no.alexgaard.ktor_template.routes
 
 import io.kotest.matchers.shouldBe
 import no.alexgaard.ktor_template.repository.UserRepository
-import no.alexgaard.ktor_template.repository.UserRepositoryTest
 import no.alexgaard.ktor_template.test_utils.IntegrationTest
 import no.alexgaard.ktor_template.test_utils.database.DatabaseUtils
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class UserControllerTest : IntegrationTest() {
+class UserRoutesTest : IntegrationTest() {
 
 	private val userRepository = dependencies.get<UserRepository>()
 	

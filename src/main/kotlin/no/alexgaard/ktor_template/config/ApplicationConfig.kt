@@ -8,20 +8,17 @@ data class ApplicationConfig(
 	val dummyJsonClient: DummyJsonClient
 ) {
 	data class Server(
-		val port: Int = 8080,
-		val host: String = "127.0.0.1",
+		val port: Int,
+		val host: String,
 	)
 
 	data class Database(
 		val jdbcUrl: String,
 		val username: String,
 		val password: Secret,
-		val minimumIdle: Int = 1,
-		val maximumPoolSize: Int = 10,
 	)
 
 	data class DummyJsonClient(
 		val baseUrl: String
 	)
-
 }

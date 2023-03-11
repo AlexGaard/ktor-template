@@ -1,6 +1,5 @@
 package no.alexgaard.ktor_template.routes
 
-import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -18,11 +17,12 @@ fun Route.registerUserRoutes(userService: UserService) =
 		}
 
 		post("/user") {
-			val request = call.receive<CreateUserDto>()
+			val request = call.receive<CreateUserRequest>()
 
-			userService.createUser(request.name)
+			val newUser = userService.createUser(request.name)
+				.let { UserDto(it.id, it.name) }
 
-			call.respond(HttpStatusCode.OK)
+			call.respond(newUser)
 		}
 	}
 
@@ -33,6 +33,6 @@ data class UserDto(
 )
 
 @Serializable
-data class CreateUserDto(
+data class CreateUserRequest(
 	val name: String
 )

@@ -6,10 +6,10 @@ import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 import no.alexgaard.ktor_template.client.dummy_json.DummyJsonClient
 
-object DownstreamApiRoutes {
+object DummyJsonRoutes {
 
-	fun Route.registerDownstreamApiRoutes(dummyJsonClient: DummyJsonClient) =
-		route("/api/v1/downstream") {
+	fun Route.registerDummyJsonRoutes(dummyJsonClient: DummyJsonClient) =
+		route("/api/v1/dummy") {
 			get("/users") {
 				val users = dummyJsonClient.getAllUsers()
 					.getOrThrow()
@@ -25,6 +25,5 @@ object DownstreamApiRoutes {
 		val firstName: String,
 		val lastName: String
 	)
-
 
 }

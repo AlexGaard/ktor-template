@@ -18,6 +18,7 @@ object Database {
 
 		Flyway.configure()
 			.dataSource(dataSource)
+			.connectRetries(10)
 			.load()
 			.migrate()
 	}
@@ -31,8 +32,8 @@ object Database {
 		hikariConfig.jdbcUrl = config.jdbcUrl
 		hikariConfig.username = config.username
 		hikariConfig.password = config.password.value
-		hikariConfig.minimumIdle = config.minimumIdle
-		hikariConfig.maximumPoolSize = config.maximumPoolSize
+		hikariConfig.minimumIdle = 1
+		hikariConfig.maximumPoolSize = 5
 		return HikariDataSource(hikariConfig)
 	}
 

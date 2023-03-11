@@ -1,6 +1,5 @@
 package no.alexgaard.ktor_template.test_utils
 
-import io.ktor.server.application.*
 import no.alexgaard.ktor_template.config.ApplicationConfig
 import no.alexgaard.ktor_template.test_utils.FreePortFinder.findFreePort
 import no.alexgaard.ktor_template.test_utils.database.SingletonPostgresContainer
@@ -13,7 +12,8 @@ object TestApplicationConfig {
 
 		return ApplicationConfig(
 			ApplicationConfig.Server(
-				port = findFreePort()
+				port = findFreePort(),
+				host = "127.0.0.1"
 			),
 			ApplicationConfig.Database(
 				username = container.username,

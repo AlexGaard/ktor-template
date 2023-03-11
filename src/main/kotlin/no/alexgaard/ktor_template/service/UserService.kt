@@ -11,8 +11,8 @@ class UserService(
 		return userRepository.getAllUsers()
 	}
 
-	fun createUser(name: String) {
-		userRepository.createUser(name)
+	fun createUser(name: String): UserDbo {
+		return userRepository.createUser(name)
 	}
 
 }

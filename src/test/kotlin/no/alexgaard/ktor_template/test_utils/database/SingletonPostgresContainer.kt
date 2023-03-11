@@ -8,14 +8,14 @@ object SingletonPostgresContainer {
 	private var postgresContainer: PostgresContainer? = null
 
 	fun dataSource(): DataSource {
-		return createOrGetContainer().dataSource()
+		return getOrCreateContainer().dataSource()
 	}
 
 	fun container(): PostgreSQLContainer<Nothing> {
-		return createOrGetContainer().container()
+		return getOrCreateContainer().container()
 	}
 
-	private fun createOrGetContainer(): PostgresContainer {
+	private fun getOrCreateContainer(): PostgresContainer {
 		if (postgresContainer == null) {
 			val container = PostgresContainer()
 			container.start()

@@ -1,6 +1,5 @@
 package no.alexgaard.ktor_template.test_utils.database
 
-import org.flywaydb.core.Flyway
 import org.jdbi.v3.core.Jdbi
 import javax.sql.DataSource
 
@@ -16,17 +15,6 @@ object DatabaseUtils {
 		} catch (t: Throwable) {
 			false
 		}
-	}
-
-	fun cleanAndApplyMigrations(dataSource: DataSource) {
-		val flyway: Flyway = Flyway.configure()
-			.dataSource(dataSource)
-			.connectRetries(10)
-			.cleanDisabled(false)
-			.load()
-
-		flyway.clean()
-		flyway.migrate()
 	}
 
 	fun cleanSchema(jdbi: Jdbi, schema: String = DEFAULT_SCHEMA) {

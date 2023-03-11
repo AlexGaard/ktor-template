@@ -10,20 +10,18 @@ import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.routing.*
 import io.micrometer.prometheus.PrometheusMeterRegistry
+import no.alexgaard.ktor_template.application.ApplicationModule.resolveDependencies
 import no.alexgaard.ktor_template.config.ApplicationConfig
-import no.alexgaard.ktor_template.routes.DownstreamApiRoutes.registerDownstreamApiRoutes
-import no.alexgaard.ktor_template.routes.registerGreeterRoutes
+import no.alexgaard.ktor_template.routes.DummyJsonRoutes.registerDummyJsonRoutes
+import no.alexgaard.ktor_template.routes.registerGreetingRoutes
 import no.alexgaard.ktor_template.routes.registerMetricRoutes
 import no.alexgaard.ktor_template.routes.registerUserRoutes
 import org.koin.core.Koin
-import org.koin.dsl.koinApplication
 
 fun createApplication(config: ApplicationConfig): Application {
-	val koin = koinApplication {
-		modules(ApplicationModule.createModule(config))
-	}.koin
+	val dependencies = resolveDependencies(config).koin
 
-	Database.migrateDb(koin.get())
+	Database.migrateDb(dependencies.get())
 
 	val server = embeddedServer(
 		factory = Netty,
@@ -33,17 +31,17 @@ fun createApplication(config: ApplicationConfig): Application {
 		install(CallLogging)
 		install(Compression) { gzip() }
 		install(ContentNegotiation) { json() }
-		install(MicrometerMetrics) { registry = koin.get<PrometheusMeterRegistry>() }
+		install(MicrometerMetrics) { registry = dependencies.get<PrometheusMeterRegistry>() }
 
 		routing {
-			registerMetricRoutes(koin.get())
-			registerGreeterRoutes(koin.get())
-			registerUserRoutes(koin.get())
-			registerDownstreamApiRoutes(koin.get())
+			registerDummyJsonRoutes(dependencies.get())
+			registerGreetingRoutes(dependencies.get())
+			registerMetricRoutes(dependencies.get())
+			registerUserRoutes(dependencies.get())
 		}
 	}
 
-	return Application(server, koin)
+	return Application(server, dependencies)
 }
 
 data class Application(
