@@ -1,25 +1,27 @@
 package no.alexgaard.ktor_template.routes
 
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
+import io.javalin.Javalin
+import io.javalin.http.Context
 import no.alexgaard.ktor_template.client.dummy_json.DummyJsonClient
 
-object DummyJsonRoutes {
+class DummyJsonRoutes(
+	private val dummyJsonClient: DummyJsonClient
+) {
 
-	fun Route.registerDummyJsonRoutes(dummyJsonClient: DummyJsonClient) =
-		route("/api/v1/dummy") {
-			get("/users") {
-				val users = dummyJsonClient.getAllUsers()
-					.getOrThrow()
-					.map { UserDto(it.id, it.firstName, it.lastName) }
+	fun register(app: Javalin) {
+		getUsers(app)
+	}
 
-				call.respond(users)
-			}
+	private fun getUsers(app: Javalin) {
+		app.get("/api/v1/dummy/users") { ctx ->
+			val users = dummyJsonClient.getAllUsers()
+				.getOrThrow()
+				.map { UserDto(it.id, it.firstName, it.lastName) }
+
+			ctx.json(users)
 		}
+	}
 
-	@Serializable
 	data class UserDto(
 		val id: Int,
 		val firstName: String,

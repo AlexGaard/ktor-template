@@ -1,51 +1,43 @@
 package no.alexgaard.ktor_template.application
 
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.metrics.micrometer.*
-import io.ktor.server.netty.*
-import io.ktor.server.plugins.callloging.*
-import io.ktor.server.plugins.compression.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.routing.*
+import io.javalin.Javalin
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.alexgaard.ktor_template.application.ApplicationModule.resolveDependencies
+import no.alexgaard.ktor_template.application.Metrics.micrometerPlugin
 import no.alexgaard.ktor_template.config.ApplicationConfig
-import no.alexgaard.ktor_template.routes.DummyJsonRoutes.registerDummyJsonRoutes
+import no.alexgaard.ktor_template.routes.DummyJsonRoutes
+import no.alexgaard.ktor_template.routes.GreetingRoutes
+import no.alexgaard.ktor_template.routes.MetricRoutes
 import no.alexgaard.ktor_template.routes.UserRoutes
-import no.alexgaard.ktor_template.routes.registerGreetingRoutes
-import no.alexgaard.ktor_template.routes.registerMetricRoutes
+import org.eclipse.jetty.server.Server
 import org.koin.core.Koin
+import java.net.InetSocketAddress
 
-fun createApplication(config: ApplicationConfig): Application {
-	val dependencies = resolveDependencies(config).koin
+object Application {
+	fun create(config: ApplicationConfig): Instance {
+		val dependencies = resolveDependencies(config).koin
 
-	Database.migrateDb(dependencies.get())
+		Database.migrateDb(dependencies.get())
 
-	val server = embeddedServer(
-		factory = Netty,
-		port = config.server.port,
-		host = config.server.host,
-	) {
-		install(CallLogging)
-		install(Compression) { gzip() }
-		install(ContentNegotiation) { json() }
-		install(MicrometerMetrics) { registry = dependencies.get<PrometheusMeterRegistry>() }
-
-		routing {
-			registerDummyJsonRoutes(dependencies.get())
-			registerGreetingRoutes(dependencies.get())
-			registerMetricRoutes(dependencies.get())
-			// Alternate way of registering routes
-			UserRoutes(dependencies.get()).register(this)
+		val app = Javalin.create {
+			it.showJavalinBanner = false
+			it.compression.gzipOnly()
+			it.jetty.server { Server(InetSocketAddress(config.server.host, config.server.port)) }
+			it.plugins.enableDevLogging()
+			it.plugins.register(micrometerPlugin(dependencies.get<PrometheusMeterRegistry>()))
 		}
+
+		DummyJsonRoutes(dependencies.get()).register(app)
+		GreetingRoutes(dependencies.get()).register(app)
+		MetricRoutes(dependencies.get()).register(app)
+		UserRoutes(dependencies.get()).register(app)
+
+		return Instance(app, dependencies)
 	}
 
-	return Application(server, dependencies)
+	data class Instance(
+		val server: Javalin,
+		val dependencies: Koin
+	)
 }
 
-data class Application(
-	val server: BaseApplicationEngine,
-	val dependencies: Koin
-)

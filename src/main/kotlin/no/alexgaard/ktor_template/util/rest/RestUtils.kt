@@ -1,25 +1,19 @@
 package no.alexgaard.ktor_template.util.rest
 
-import kotlinx.serialization.decodeFromString
 import no.alexgaard.ktor_template.util.rest.ApiResult.Companion.failure
 import no.alexgaard.ktor_template.util.rest.ApiResult.Companion.success
 import no.alexgaard.ktor_template.util.rest.JsonUtils.jsonMapper
-import okhttp3.*
+import okhttp3.Headers
 import okhttp3.Headers.Companion.toHeaders
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
 fun baseClient(): OkHttpClient {
 	return OkHttpClient().newBuilder().build()
-}
-
-fun bearerAuthorzation(bearerTokenProvider: () -> String): Pair<String, String> {
-	return bearerAuthorzation(bearerTokenProvider.invoke())
-}
-
-fun bearerAuthorzation(bearerToken: String): Pair<String, String> {
-	return "Authorization" to "Bearer $bearerToken"
 }
 
 fun request(
@@ -38,7 +32,7 @@ fun request(
 
 inline fun <reified T> OkHttpClient.sendRequest(
 	request: Request,
-	bodyParser: (body: String) -> T = { jsonMapper.decodeFromString(it) }
+	bodyParser: (body: String) -> T = { jsonMapper.readValue(it, T::class.java) }
 ): ApiResult<T> {
 	try {
 		this.newCall(request).execute().use { res ->

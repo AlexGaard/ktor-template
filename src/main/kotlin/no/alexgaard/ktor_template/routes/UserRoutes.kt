@@ -1,50 +1,43 @@
 package no.alexgaard.ktor_template.routes
 
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
+import io.javalin.Javalin
+import io.javalin.http.Context
 import no.alexgaard.ktor_template.service.UserService
 
 class UserRoutes(
 	private val userService: UserService
 ) {
 
-	fun register(routing: Routing) {
-		routing.route("/api/v1") {
-			getAllUsers()
-			createUser()
-		}
+	fun register(app: Javalin) {
+		getAllUsers(app)
+		createUser(app)
 	}
 
-	private fun Route.getAllUsers() {
-		get("/user") {
+	private fun getAllUsers(app: Javalin) {
+		app.get("/api/v1/user") { ctx ->
 			val users = userService.getAllUsers()
 				.map { UserDto(it.id, it.name) }
 
-			call.respond(users)
+			ctx.json(users)
 		}
 	}
 
-	private fun Route.createUser() {
-		post("/user") {
-			val request = call.receive<CreateUserRequest>()
+	private fun createUser(app: Javalin) {
+		app.post("/api/v1/user") { ctx ->
+			val request = ctx.bodyAsClass(CreateUserRequest::class.java)
 
 			val newUser = userService.createUser(request.name)
 				.let { UserDto(it.id, it.name) }
 
-			call.respond(newUser)
+			ctx.json(newUser)
 		}
 	}
 
-	@Serializable
 	data class UserDto(
 		val id: Int,
 		val name: String,
 	)
 
-	@Serializable
 	data class CreateUserRequest(
 		val name: String
 	)

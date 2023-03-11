@@ -1,12 +1,22 @@
 package no.alexgaard.ktor_template.routes
 
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.javalin.Javalin
+import io.javalin.http.Context
 import io.micrometer.prometheus.PrometheusMeterRegistry
+import io.prometheus.client.exporter.common.TextFormat
 
-fun Route.registerMetricRoutes(meterRegistry: PrometheusMeterRegistry) = route("/internal/metrics") {
-	get {
-		call.respond(meterRegistry.scrape())
+class MetricRoutes(
+	private val meterRegistry: PrometheusMeterRegistry
+) {
+
+	fun register(app: Javalin) {
+		getMetrics(app)
 	}
+
+	private fun getMetrics(app: Javalin) {
+		app.get("/internal/metrics") { ctx ->
+			ctx.contentType(TextFormat.CONTENT_TYPE_004).result(meterRegistry.scrape())
+		}
+	}
+
 }

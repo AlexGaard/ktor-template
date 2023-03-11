@@ -1,7 +1,9 @@
 package no.alexgaard.ktor_template.client.dummy_json
 
-import kotlinx.serialization.Serializable
-import no.alexgaard.ktor_template.util.rest.*
+import no.alexgaard.ktor_template.util.rest.ApiResult
+import no.alexgaard.ktor_template.util.rest.baseClient
+import no.alexgaard.ktor_template.util.rest.request
+import no.alexgaard.ktor_template.util.rest.sendRequest
 import okhttp3.OkHttpClient
 
 class DummyJsonClientImpl(
@@ -20,11 +22,9 @@ class DummyJsonClientImpl(
 	}
 
 	object GetAllUsers {
-		@Serializable
 		data class Response(
 			val users: List<User>
 		) {
-			@Serializable
 			data class User(
 				val id: Int,
 				val firstName: String,
